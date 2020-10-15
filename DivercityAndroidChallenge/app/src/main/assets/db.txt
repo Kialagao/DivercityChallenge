@@ -1,0 +1,41 @@
+[{
+    "id": 1,
+    "first_name": "Jeanette",
+    "last_name": "Pemberthy",
+    "email": "jpenddreth0@test.gov",
+    "gender": "Female",
+    "year_experience": 12,
+    "avatar":
+    "https://www.shutterstock.com/image-vector/lion-head-logo-vector-template-illustration-743978617",
+    “dob": "1980-01-29"
+}, {
+    "id": 2,
+    "first_name": "Giovaini",
+    "last_name": “Anderson",
+    "email": "ganderson@senate.gov",
+    "gender": "Male",
+    "year_experience": 8,
+    "avatar":
+    "https://image.shutterstock.com/z/stock-vector-vector-tiger-head-face-for-retro-logos-emblems-badges-labels-template-and-t-shirt-vintage-736036015.jpg",
+    "dob": "1992-05-18"
+}, {
+    "id": 3,
+    "first_name": "Noelle",
+    "last_name": “Gonzalez",
+    "email": "ngonzo@imageshack.us",
+    "gender": "Female",
+    "year_experience": 2,
+    "avatar":
+    "https://www.shutterstock.com/image-vector/black-mamba-uncoiled-head-three-quarter-237781042",
+    "dob": "1979-11-22"
+}, {
+    "id": 4,
+    "first_name": "Patrick",
+    "last_name": "Valek",
+    "email": "pvalek3@vk.com",
+    "gender": "Male",
+    "year_experience": 22,
+    "avatar":
+    "https://www.shutterstock.com/image-vector/monochrome-portrait-brown-bear-looking-ahead-1316901974",
+    "dob": "1967-12-12"
+}]
