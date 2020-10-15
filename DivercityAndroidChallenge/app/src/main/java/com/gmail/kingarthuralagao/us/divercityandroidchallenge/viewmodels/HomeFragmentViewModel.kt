@@ -6,6 +6,7 @@ import android.content.res.AssetManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.models.User
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.repositories.HomeFragmentRepository
 import java.io.IOException
@@ -31,5 +32,33 @@ class HomeFragmentViewModel(application: Application) : AndroidViewModel(applica
            val fileOutputStream = getApplication<Application>().openFileOutput(fileName, MODE_PRIVATE)
            homeFragmentRepository.fetchUsers(inputStream, fileOutputStream)
        }
+    }
+
+    fun sortData(sortBy : String, sortOption : String) {
+        when (sortBy) {
+            getApplication<Application>().resources.getString(R.string.last_name) -> {
+                if (sortOption == getApplication<Application>().resources.getString(R.string.ascending)) {
+                    userListLiveData.value!!.sortBy { it.getLastName() }
+                } else {
+                    userListLiveData.value!!.sortByDescending { it.getLastName() }
+                }
+            }
+
+            getApplication<Application>().getString(R.string.years_of_experience) -> {
+                if (sortOption == getApplication<Application>().resources.getString(R.string.ascending)) {
+                    userListLiveData.value!!.sortBy { it.getYearsOfExperience() }
+                } else {
+                    userListLiveData.value!!.sortByDescending { it.getYearsOfExperience() }
+                }
+            }
+
+            else -> {
+                if (sortOption == getApplication<Application>().resources.getString(R.string.ascending)) {
+                    userListLiveData.value!!.sortBy { it.getDateOfBirth() }
+                } else {
+                    userListLiveData.value!!.sortByDescending { it.getDateOfBirth() }
+                }
+            }
+        }
     }
 }

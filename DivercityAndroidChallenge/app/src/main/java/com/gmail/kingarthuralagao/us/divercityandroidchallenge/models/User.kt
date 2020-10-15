@@ -1,18 +1,27 @@
 package com.gmail.kingarthuralagao.us.divercityandroidchallenge.models
 
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.properties.Delegates
+
 class User {
-    private lateinit var fullName : String
-    private lateinit var dateOfBirth : String
+    private lateinit var firstName : String
+    private lateinit var lastName : String
+    private lateinit var dateOfBirth : Date
     private lateinit var email : String
     private lateinit var gender : String
     private lateinit var avatar : String
-    private lateinit var yearsOfExperience : String
+    private var yearsOfExperience by Delegates.notNull<Int>()
 
-    fun getFullName() : String {
-        return fullName
+    fun getFirstName() : String {
+        return firstName
     }
 
-    fun getDateOfBirth() : String {
+    fun getLastName() : String {
+        return lastName
+    }
+
+    fun getDateOfBirth() : Date {
         return dateOfBirth
     }
 
@@ -24,7 +33,8 @@ class User {
         return gender
     }
 
-    fun getYearsOfExperience() : String {
+    @JvmName("getYearsOfExperience1")
+    fun getYearsOfExperience() : Int {
         return yearsOfExperience
     }
 
@@ -32,82 +42,62 @@ class User {
         return avatar
     }
 
-    override fun toString(): String {
-        return ""
-    }
-
     class UserBuilder {
         private lateinit var firstName : String
         private lateinit var lastName: String
-        private lateinit var dateOfBirth : String
+        private lateinit var dateOfBirth : Date
         private lateinit var email : String
         private lateinit var gender : String
-        private lateinit var yearsOfExperience : String
+        private var yearsOfExperience by Delegates.notNull<Int>()
         private lateinit var avatar : String
         private lateinit var user: User
 
-        fun withFirstName(fname: String): UserBuilder {
-            firstName = fname
+        fun withFirstName(fName: String): UserBuilder {
+            firstName = fName
             return this
         }
 
-        fun withLastName(lname: String): UserBuilder {
-            lastName = lname
+        fun withLastName(lName: String): UserBuilder {
+            lastName = lName
             return this
         }
 
         fun withBirthday(date: String): UserBuilder {
-            val month = getMonth(date.substring(5, 7))
-            dateOfBirth = "Born on $month ${date.substring(8, date.length)}, ${date.substring(0, 4)}"
+            val sdf = SimpleDateFormat("yyy/dd/yyyy")
+            dateOfBirth = sdf.parse("${date.substring(5, 7)}/${date.substring(8, date.length)}/${date.substring(0, 4)}")
             return this
         }
 
-        fun withEmail(email : String): UserBuilder {
+        fun withEmail(email: String): UserBuilder {
             this.email = email
             return this
         }
 
-        fun withGender(gender : String) : UserBuilder {
+        fun withGender(gender: String) : UserBuilder {
             this.gender = gender
             return this
         }
 
-        fun withYearsOfExperience(years : Int) : UserBuilder {
-            yearsOfExperience = "$years ${if (years > 1) "years" else "year"} of experience"
+        fun withYearsOfExperience(years: Int) : UserBuilder {
+            yearsOfExperience = years
             return this
         }
 
-        fun withAvatar(imageUrl : String) : UserBuilder {
+        fun withAvatar(imageUrl: String) : UserBuilder {
             avatar = imageUrl
             return this
         }
 
         fun build(): User {
             user = User()
-            user.fullName = ("$firstName $lastName")
+            user.firstName = firstName
+            user.lastName = lastName
             user.email = email
             user.gender = gender
             user.yearsOfExperience = yearsOfExperience
             user.dateOfBirth = dateOfBirth
             user.avatar = avatar
             return user
-        }
-
-        private fun getMonth(substring: String): String {
-            return when (substring) {
-                "01" -> "January"
-                "02" -> "February"
-                "03" -> "March"
-                "04" -> "April"
-                "05" -> "May"
-                "06" -> "June"
-                "07" -> "July"
-                "08" -> "August"
-                "09" -> "September"
-                "10" -> "October"
-                "11" -> "November"
-                else -> "December"
-            }
         }
     }
 

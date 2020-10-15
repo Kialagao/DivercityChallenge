@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sort List:"
+        android:textColor="@color/colorSecondaryText"/>
+
+    <RadioGroup
+        android:id="@+id/sort_by_radio_group"
+        android:checkedButton="@id/last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/last_name"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:text="@string/last_name"
+            android:tag="@string/last_name"/>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/years_experience"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:text="@string/years_of_experience"
+            android:tag="@string/years_of_experience"/>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/dob"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:text="@string/date_of_birth"
+            android:tag="@string/date_of_birth"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Sort Options:"
+        android:textColor="@color/colorSecondaryText"/>
+
+    <RadioGroup
+        android:id="@+id/sort_options_radio_group"
+        android:checkedButton="@id/ascending"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/ascending"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:text="@string/ascending"
+            android:tag="@string/ascending"/>
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/descending"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:text="@string/descending"
+            android:tag="@string/descending"/>
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <TextView
+            android:id="@+id/okTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            app:layout_constraintStart_toEndOf="@id/cancelTv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="OK"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/cancelTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/okTv"
+            android:text="CANCEL"
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

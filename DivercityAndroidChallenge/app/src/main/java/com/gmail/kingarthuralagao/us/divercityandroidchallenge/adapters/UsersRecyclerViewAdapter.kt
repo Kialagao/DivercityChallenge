@@ -17,6 +17,7 @@ import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.Viewh
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.models.User
 import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
+import java.util.*
 
 class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -42,22 +43,32 @@ class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         Log.i(TAG, "onBindViewHolder")
         val user = usersDataSet[position]
-        (holder as UserViewHolder).fullNameTextView.text = user.getFullName()
+        (holder as UserViewHolder).fullNameTextView.text = "${user.getFirstName()} ${user.getLastName()}"
         holder.emailTextView.text = user.getEmail()
         holder.genderTextView.text = user.getGender()
-        holder.yearsOfExperienceTextView.text = user.getYearsOfExperience()
-        holder.dateOfBirthTextView.text = user.getDateOfBirth()
+        holder.yearsOfExperienceTextView.text =
+            "${user.getYearsOfExperience()} ${if (user.getYearsOfExperience() > 1) "years" else "year"} of experience"
+        holder.dateOfBirthTextView.text = setDateOfBirth(user.getDateOfBirth())
+
         holder.avatarImageView.layoutParams = ConstraintLayout.LayoutParams(
             getScreenWidth() / 4,
             getScreenWidth() / 4
         )
-        Log.d(TAG, user.getAvatar())
-        //Glide.with(holder.avatarImageView.context).load(user.getAvatar()).into(holder.avatarImageView)
-
-        Picasso.get()
+        Glide
+            .with(holder.avatarImageView.context)
             .load(user.getAvatar())
-            .resize(getScreenWidth() / 4, getScreenWidth() / 4)
+            .circleCrop()
             .into(holder.avatarImageView)
+    }
+
+    private fun setDateOfBirth(dateOfBirth: Date): CharSequence? {
+        val calendar = Calendar.getInstance()
+        calendar.time = dateOfBirth
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val year = calendar.get(Calendar.YEAR)
+        val monthName = getMonthName(month)
+        return "Born on $monthName $day, $year"
     }
 
     override fun getItemCount(): Int {
@@ -67,6 +78,24 @@ class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
     fun setData(newData: MutableList<User>) {
         this.usersDataSet = newData
         notifyDataSetChanged()
+    }
+
+
+    private fun getMonthName(month: Int): String {
+        return when (month) {
+            1 -> "January"
+            2 -> "February"
+            3 -> "March"
+            4 -> "April"
+            5 -> "May"
+            6 -> "June"
+            7 -> "July"
+            8 -> "August"
+            9 -> "September"
+            10 -> "October"
+            11 -> "November"
+            else -> "December"
+        }
     }
 }
 
