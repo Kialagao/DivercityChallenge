@@ -1,8 +1,13 @@
 package com.gmail.kingarthuralagao.us.divercityandroidchallenge.views
 
+import android.content.res.AssetManager
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
+import org.json.JSONArray
+import java.io.IOException
+import java.io.InputStreamReader
 
 class MainActivity : AppCompatActivity() {
     private val TAG = javaClass.simpleName
@@ -10,10 +15,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*
         var str: String? = ""
         try {
-
+            /*
             val assetManager: AssetManager = assets
             val inputStream = assetManager.open("db.txt")
             val inputStreamReader = InputStreamReader(inputStream)
@@ -25,9 +29,10 @@ class MainActivity : AppCompatActivity() {
             }
 
             val jsonObject = JSONArray(str)
-            Log.d(TAG, jsonObject.toString())
+            Log.d(TAG, jsonObject.toString())*/
 
-            val input = openFileInput("userdb.txt")
+
+            val input = openFileInput("fakeUserdatabase.txt")
             val inputStreamReader = InputStreamReader(input)
             val inputBuffer = CharArray(100)
             var charRead: Int
@@ -38,13 +43,14 @@ class MainActivity : AppCompatActivity() {
 
             val jsonObject = JSONArray(str)
             Log.d(TAG, jsonObject.toString())
-            val fileName = "fakedb2.txt"
+            /*
+            val fileName = "fakeUserdatabase.txt"
             val fileOutputStream = openFileOutput(fileName, MODE_PRIVATE)
             val byte = jsonObject.toString().toByteArray()
             fileOutputStream.write(byte)
-            fileOutputStream.close()
+            fileOutputStream.close()*/
         } catch (ioe: IOException) {
             ioe.printStackTrace()
-        }*/
+        }
     }
 }

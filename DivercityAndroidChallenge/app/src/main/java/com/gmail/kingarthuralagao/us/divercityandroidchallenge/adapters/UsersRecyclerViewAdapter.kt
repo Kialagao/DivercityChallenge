@@ -11,12 +11,14 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.ViewholderUserBinding
+import com.gmail.kingarthuralagao.us.divercityandroidchallenge.models.User
 import com.google.android.material.card.MaterialCardView
 import com.squareup.picasso.Picasso
 
-class UsersRecyclerViewAdapter(private var myDataSet: MutableList<String>)
+class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val TAG = javaClass.simpleName
@@ -39,23 +41,31 @@ class UsersRecyclerViewAdapter(private var myDataSet: MutableList<String>)
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         Log.i(TAG, "onBindViewHolder")
-        (holder as UserViewHolder).fullNameTextView.text = "King Arthur Alagao"
-        holder.emailTextView.text = "kingarthuralagao@gmail.com"
-        holder.genderTextView.text = "Male"
-        holder.yearsOfExperienceTextView.text = "5"
-        holder.dateOfBirthTextView.text = "Born on September 20, 1998"
+        val user = usersDataSet[position]
+        (holder as UserViewHolder).fullNameTextView.text = user.getFullName()
+        holder.emailTextView.text = user.getEmail()
+        holder.genderTextView.text = user.getGender()
+        holder.yearsOfExperienceTextView.text = user.getYearsOfExperience()
+        holder.dateOfBirthTextView.text = user.getDateOfBirth()
         holder.avatarImageView.layoutParams = ConstraintLayout.LayoutParams(
             getScreenWidth() / 4,
             getScreenWidth() / 4
         )
+        Log.d(TAG, user.getAvatar())
+        //Glide.with(holder.avatarImageView.context).load(user.getAvatar()).into(holder.avatarImageView)
+
+        Picasso.get()
+            .load(user.getAvatar())
+            .resize(getScreenWidth() / 4, getScreenWidth() / 4)
+            .into(holder.avatarImageView)
     }
 
     override fun getItemCount(): Int {
-        return 2
+        return usersDataSet.size
     }
 
-    fun setData(newData: MutableList<String>) {
-        this.myDataSet = newData
+    fun setData(newData: MutableList<User>) {
+        this.usersDataSet = newData
         notifyDataSetChanged()
     }
 }

@@ -6,12 +6,12 @@
     "gender": "Female",
     "year_experience": 12,
     "avatar":
-    "https://www.shutterstock.com/image-vector/lion-head-logo-vector-template-illustration-743978617",
-    “dob": "1980-01-29"
+    "https://image.shutterstock.com/z/stock-vector-lion-head-logo-vector-template-illustration-design-743978617.jpg",
+    "dob": "1980-01-29"
 }, {
     "id": 2,
     "first_name": "Giovaini",
-    "last_name": “Anderson",
+    "last_name": "Anderson",
     "email": "ganderson@senate.gov",
     "gender": "Male",
     "year_experience": 8,
@@ -21,12 +21,12 @@
 }, {
     "id": 3,
     "first_name": "Noelle",
-    "last_name": “Gonzalez",
+    "last_name": "Gonzalez",
     "email": "ngonzo@imageshack.us",
     "gender": "Female",
     "year_experience": 2,
     "avatar":
-    "https://www.shutterstock.com/image-vector/black-mamba-uncoiled-head-three-quarter-237781042",
+    "https://image.shutterstock.com/z/stock-vector-black-mamba-uncoiled-head-in-a-three-quarter-view-teeth-bared-ready-to-strike-237781042.jpg",
     "dob": "1979-11-22"
 }, {
     "id": 4,
@@ -36,6 +36,6 @@
     "gender": "Male",
     "year_experience": 22,
     "avatar":
-    "https://www.shutterstock.com/image-vector/monochrome-portrait-brown-bear-looking-ahead-1316901974",
+    "https://image.shutterstock.com/z/stock-vector-monochrome-portrait-of-a-brown-bear-looking-ahead-against-a-black-background-1316901974.jpg",
     "dob": "1967-12-12"
 }]
