@@ -1,7 +1,6 @@
 package com.gmail.kingarthuralagao.us.divercityandroidchallenge.repositories
 
 import android.content.SharedPreferences
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.models.User
 import org.json.JSONArray

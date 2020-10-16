@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.FragmentHomeBinding
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.FragmentMenuBinding
-import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.FragmentProfileBinding
 import java.lang.RuntimeException
 
 class MenuFragment : Fragment() {

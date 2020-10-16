@@ -1,10 +1,8 @@
 package com.gmail.kingarthuralagao.us.divercityandroidchallenge.repositories
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.models.User
 import org.json.JSONArray
-import org.json.JSONObject
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream

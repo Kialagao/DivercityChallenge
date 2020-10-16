@@ -1,16 +1,10 @@
 package com.gmail.kingarthuralagao.us.divercityandroidchallenge.viewmodels
 
 import android.app.Application
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
-import android.content.res.AssetManager
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
-import com.gmail.kingarthuralagao.us.divercityandroidchallenge.models.User
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.repositories.HomeFragmentRepository
-import java.io.File
 import java.io.IOException
 
 class HomeFragmentViewModel(application: Application) : AndroidViewModel(application) {

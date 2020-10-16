@@ -2,9 +2,6 @@ package com.gmail.kingarthuralagao.us.divercityandroidchallenge.views
 
 import android.app.Activity
 import android.content.Intent
-import android.content.res.AssetManager
-import android.graphics.Color
-import android.inputmethodservice.InputMethodService
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -13,12 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.ActivityMainBinding
-import org.json.JSONArray
-import org.json.JSONObject
-import java.io.File
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.PrintWriter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var mainActivityBinding : ActivityMainBinding
@@ -31,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     fun login(v : View) {
         if (v.id == mainActivityBinding.loginBtn.id) {
             closeKeyboard(v)
-            var id = when (mainActivityBinding.emailTv.text.toString()) {
+            val id = when (mainActivityBinding.emailTv.text.toString()) {
                 "jpenddreth0@test.gov" -> 1
                 "ganderson@senate.gov" -> 2
                 "ngonzo@imageshack.us" -> 3

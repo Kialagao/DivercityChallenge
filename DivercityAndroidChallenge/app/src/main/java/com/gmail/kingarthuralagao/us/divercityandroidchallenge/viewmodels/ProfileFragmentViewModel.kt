@@ -6,8 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.repositories.ProfileFragmentRepository
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
 
 class ProfileFragmentViewModel(application: Application) : AndroidViewModel(application){

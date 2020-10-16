@@ -103,6 +103,7 @@ class UserDashboardActivity : AppCompatActivity(), HomeFragment.ISortDataListene
         val editNameDialogFragment = EditNameDialogFragment.newInstance(firstName, lastName)
         editNameDialogFragment.show(supportFragmentManager, "")
     }
+
     override fun onFinishEdit(firstName : String, lastName : String) {
         if (firstName.isNotEmpty() && lastName.isNotEmpty()) {
             profileFragment.updateUserFullName(firstName, lastName)
