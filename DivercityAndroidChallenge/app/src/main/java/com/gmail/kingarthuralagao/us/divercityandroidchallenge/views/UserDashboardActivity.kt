@@ -7,22 +7,27 @@ import androidx.fragment.app.Fragment
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.ActivityUserDashboardBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlin.properties.Delegates
 
-class UserDashboardActivity : AppCompatActivity(), HomeFragment.SortListener, SortDialogFragment.SortByListener{
+class UserDashboardActivity : AppCompatActivity(), HomeFragment.ISortDataListener, SortDialogFragment.ISortByListener,
+    EditNameDialogFragment.IDismissListener, ProfileFragment.IEditNameListener {
 
-    lateinit var userDashboardBinding : ActivityUserDashboardBinding
+    private lateinit var userDashboardBinding : ActivityUserDashboardBinding
+    private var userId by Delegates.notNull<Int>()
 
     private val homeFragment : HomeFragment by lazy {
         HomeFragment.newInstance()
     }
 
     private val profileFragment : ProfileFragment by lazy {
-        ProfileFragment.newInstance()
+        ProfileFragment.newInstance(userId)
     }
 
     private val menuFragment : MenuFragment by lazy {
         MenuFragment.newInstance()
     }
+
+    private lateinit var activeFragment : Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +36,7 @@ class UserDashboardActivity : AppCompatActivity(), HomeFragment.SortListener, So
         setSupportActionBar(userDashboardBinding.userDashBoardToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        userId = intent.getIntExtra(resources.getString(R.string.id), 0)
         userDashboardBinding.userDashBoardToolbar.title = resources.getString(R.string.home)
         userDashboardBinding.bottomNavigation.setOnNavigationItemSelectedListener(onNavigationSelectedListener)
         userDashboardBinding.bottomNavigation.selectedItemId = R.id.home
@@ -38,7 +44,32 @@ class UserDashboardActivity : AppCompatActivity(), HomeFragment.SortListener, So
 
     private fun switchFragment(fragment: Fragment) {
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(userDashboardBinding.fragmentContainer.id, fragment)
+
+        when (fragment) {
+            homeFragment -> {
+                if (supportFragmentManager.findFragmentByTag(resources.getString(R.string.home)) == null) {
+                    activeFragment = fragment
+                    transaction.add(userDashboardBinding.fragmentContainer.id, homeFragment, resources.getString(R.string.home))
+                }
+            }
+
+            profileFragment -> {
+                if (supportFragmentManager.findFragmentByTag(resources.getString(R.string.profile)) == null) {
+                    transaction.add(userDashboardBinding.fragmentContainer.id, profileFragment, resources.getString(R.string.profile))
+                }
+            }
+
+            else -> {
+                if (supportFragmentManager.findFragmentByTag(resources.getString(R.string.menu)) == null) {
+                    transaction.add(userDashboardBinding.fragmentContainer.id, menuFragment, resources.getString(R.string.menu))
+                }
+            }
+        }
+
+        transaction.hide(activeFragment)
+        transaction.show(fragment)
+        activeFragment = fragment
+        //transaction.replace(userDashboardBinding.fragmentContainer.id, fragment)
         transaction.commit()
     }
 
@@ -68,4 +99,13 @@ class UserDashboardActivity : AppCompatActivity(), HomeFragment.SortListener, So
     override fun onSortOptionPicked(sortBy: String, sortOption: String) {
         homeFragment.sortItems(sortBy, sortOption)
     }
+
+    override fun onEditName(firstName: String, lastName: String) {
+        val editNameDialogFragment = EditNameDialogFragment.newInstance(firstName, lastName)
+        editNameDialogFragment.show(supportFragmentManager, "")
+    }
+    override fun onFinishEdit(firstName : String, lastName : String) {
+        profileFragment.updateUserFullName(firstName, lastName)
+    }
+
 }

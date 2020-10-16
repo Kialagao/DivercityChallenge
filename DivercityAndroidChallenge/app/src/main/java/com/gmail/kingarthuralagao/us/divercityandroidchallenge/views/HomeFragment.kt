@@ -20,7 +20,7 @@ import java.lang.RuntimeException
 
 class HomeFragment : Fragment() {
 
-    interface SortListener {
+    interface ISortDataListener {
         fun onSortBtnClick()
     }
 
@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewAdapter : UsersRecyclerViewAdapter
     private lateinit var itemDecorator : VerticalSpaceItemDecoration
     private lateinit var homeFragmentViewModel : HomeFragmentViewModel
-    private var sortListener : SortListener? = null
+    private var sortListener : ISortDataListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,7 +72,7 @@ class HomeFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is SortListener) {
+        if (context is ISortDataListener) {
             sortListener = context
         } else {
             throw RuntimeException("Must implement SortListener")

@@ -8,4 +8,7 @@
     <string name="date_of_birth">Date of Birth</string>
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
+    <string name="id">id</string>
+    <string name="edit_name">Edit Name</string>
+    <string name="save">Save</string>
 </resources>

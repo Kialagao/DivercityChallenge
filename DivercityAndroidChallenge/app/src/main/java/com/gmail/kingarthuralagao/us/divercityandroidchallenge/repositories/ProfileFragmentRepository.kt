@@ -5,23 +5,43 @@ import androidx.lifecycle.MutableLiveData
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.models.User
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
-import java.io.InputStreamReader
+import java.io.*
 
-class HomeFragmentRepository {
+class ProfileFragmentRepository {
     private val TAG = javaClass.simpleName
-    val usersListLiveData = MutableLiveData<MutableList<User>>()
+    val usersListLiveData = MutableLiveData<User>()
 
     // Mimic network call
-    fun fetchUsers(inputStream: InputStream, outputStream: FileOutputStream?) {
+    fun fetchUsers(id : Int, inputStream: InputStream, outputStream: FileOutputStream?) {
         Thread {
-            getUsersInfoFromFile(inputStream, outputStream)
+            getUserInfoFromFile(id, inputStream, outputStream)
         }.start()
     }
 
-    private fun getUsersInfoFromFile(inputStream: InputStream, fileOutputStream: FileOutputStream?) {
+    // Mimic network call
+    fun updateUserFullName(userId : Int, firstName : String, lastName : String, file : File) {
+        Thread {
+            val inputStream = FileInputStream(file)
+            val usersJsonArray = getUsersInfoFromFile(inputStream)
+            var jsonObject = JSONObject()
+            var index = 0
+            while (index < usersJsonArray.length()) {
+                jsonObject = JSONObject(usersJsonArray.get(index).toString())
+                if (jsonObject.getInt("id") == userId) {
+                    jsonObject.put("first_name", firstName)
+                    jsonObject.put("last_name", lastName)
+                    break
+                }
+                index += 1
+            }
+            usersJsonArray.put(index, jsonObject)
+            usersListLiveData.postValue(buildUser(usersJsonArray, userId))
+            PrintWriter(file).print("") // Erase contents of file
+            writeToFile(usersJsonArray, FileOutputStream(file))
+        }.start()
+    }
+
+    private fun getUsersInfoFromFile(inputStream: InputStream) : JSONArray {
         var str: String? = ""
         try {
             val inputStreamReader = InputStreamReader(inputStream)
@@ -36,7 +56,29 @@ class HomeFragmentRepository {
             val jsonArray = JSONArray(str)
             Log.d(TAG, jsonArray.toString())
             inputStreamReader.close()
-            usersListLiveData.postValue(buildUsers(jsonArray))
+            return jsonArray
+        } catch (e :IOException) {
+            e.printStackTrace()
+            return JSONArray()
+        }
+    }
+
+    private fun getUserInfoFromFile(id : Int, inputStream: InputStream, fileOutputStream: FileOutputStream?) {
+        var str: String? = ""
+        try {
+            val inputStreamReader = InputStreamReader(inputStream)
+            val inputBuffer = CharArray(100)
+            var charRead: Int
+            while (inputStreamReader.read(inputBuffer).also { charRead = it } > 0) {
+                val readString = String(inputBuffer, 0, charRead)
+                str += readString
+            }
+
+            Log.d(TAG, str.toString())
+            val jsonArray = JSONArray(str)
+            Log.d(TAG, jsonArray.toString())
+            inputStreamReader.close()
+            usersListLiveData.postValue(buildUser(jsonArray, id))
 
             if (fileOutputStream != null) {
                 writeToFile(jsonArray, fileOutputStream)
@@ -55,15 +97,15 @@ class HomeFragmentRepository {
     }
 
     // Build User objects from JSON
-    private fun buildUsers(jsonArray: JSONArray) : MutableList<User> {
-        val usersList = mutableListOf<User>()
+    private fun buildUser(jsonArray: JSONArray, id : Int) : User? {
         val size  = jsonArray.length()
         for (i in 0 until size) {
             val jsonObject = jsonArray.getJSONObject(i)
-            val user = buildUser(jsonObject, User.builder)
-            usersList.add(user)
+            if (jsonObject.getInt("id") == id) {
+               return buildUser(jsonObject, User.builder)
+            }
         }
-        return usersList
+        return null
     }
 
     private fun buildUser(jsonObject: JSONObject, builder: User.UserBuilder): User {

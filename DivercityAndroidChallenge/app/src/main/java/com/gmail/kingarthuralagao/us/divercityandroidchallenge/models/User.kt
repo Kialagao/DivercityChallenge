@@ -5,6 +5,7 @@ import java.util.*
 import kotlin.properties.Delegates
 
 class User {
+    private var id by Delegates.notNull<Int>()
     private lateinit var firstName : String
     private lateinit var lastName : String
     private lateinit var dateOfBirth : Date
@@ -12,6 +13,10 @@ class User {
     private lateinit var gender : String
     private lateinit var avatar : String
     private var yearsOfExperience by Delegates.notNull<Int>()
+
+    fun getUserId() : Int {
+        return id
+    }
 
     fun getFirstName() : String {
         return firstName
@@ -43,6 +48,7 @@ class User {
     }
 
     class UserBuilder {
+        private var id by Delegates.notNull<Int>()
         private lateinit var firstName : String
         private lateinit var lastName: String
         private lateinit var dateOfBirth : Date
@@ -51,6 +57,11 @@ class User {
         private var yearsOfExperience by Delegates.notNull<Int>()
         private lateinit var avatar : String
         private lateinit var user: User
+
+        fun withId(id : Int) : UserBuilder {
+            this.id = id
+            return this
+        }
 
         fun withFirstName(fName: String): UserBuilder {
             firstName = fName

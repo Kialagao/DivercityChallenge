@@ -15,12 +15,12 @@ import java.lang.RuntimeException
 
 class SortDialogFragment : DialogFragment(), View.OnClickListener {
 
-    interface SortByListener {
+    interface ISortByListener {
         fun onSortOptionPicked(sortBy : String, sortOption : String)
     }
 
     private lateinit var viewBinding: DialogFragmentSortBinding
-    private var sortByListener : SortByListener? = null
+    private var sortByListener : ISortByListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +43,7 @@ class SortDialogFragment : DialogFragment(), View.OnClickListener {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is SortByListener) {
+        if (context is ISortByListener) {
             sortByListener = context
         } else {
             throw RuntimeException("Must Implement SortByListener")
