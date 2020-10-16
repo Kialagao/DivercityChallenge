@@ -1,5 +1,6 @@
 package com.gmail.kingarthuralagao.us.divercityandroidchallenge.repositories
 
+import android.content.SharedPreferences
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.models.User
@@ -19,7 +20,7 @@ class ProfileFragmentRepository {
     }
 
     // Mimic network call
-    fun updateUserFullName(userId : Int, firstName : String, lastName : String, file : File) {
+    fun updateUserFullName(userId : Int, firstName : String, lastName : String, file : File, editor: SharedPreferences.Editor) {
         Thread {
             val inputStream = FileInputStream(file)
             val usersJsonArray = getUsersInfoFromFile(inputStream)
@@ -35,8 +36,16 @@ class ProfileFragmentRepository {
                 index += 1
             }
             usersJsonArray.put(index, jsonObject)
-            usersListLiveData.postValue(buildUser(usersJsonArray, userId))
-            PrintWriter(file).print("") // Erase contents of file
+            val user = buildUser(usersJsonArray, userId)
+            usersListLiveData.postValue(user)
+
+            // Store full name in local storage
+            if (user != null) {
+                editor.putString("fullName", "${user.getFirstName()} ${user.getLastName()}")
+            }
+
+            // Fake post request to server
+            PrintWriter(file).print("")
             writeToFile(usersJsonArray, FileOutputStream(file))
         }.start()
     }

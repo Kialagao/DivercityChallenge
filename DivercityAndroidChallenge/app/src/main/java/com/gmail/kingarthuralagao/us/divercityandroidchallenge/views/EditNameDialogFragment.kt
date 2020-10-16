@@ -20,7 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class EditNameDialogFragment : BottomSheetDialogFragment(), View.OnClickListener {
 
-    interface IDismissListener {
+    interface IFinishEditListener {
         fun onFinishEdit(firstName: String, lastName: String)
     }
 
@@ -37,7 +37,7 @@ class EditNameDialogFragment : BottomSheetDialogFragment(), View.OnClickListener
 
     private var firstName = ""
     private var lastName = ""
-    private var dismissListener : IDismissListener? = null
+    private var dismissListener : IFinishEditListener? = null
     private lateinit var dialogFragmentEditNameBinding: DialogFragmentEditNameBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +67,7 @@ class EditNameDialogFragment : BottomSheetDialogFragment(), View.OnClickListener
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        if (context is IDismissListener) {
+        if (context is IFinishEditListener) {
             dismissListener = context
         } else {
             throw RuntimeException("Must implement IDismissListener")
@@ -91,22 +91,6 @@ class EditNameDialogFragment : BottomSheetDialogFragment(), View.OnClickListener
         dismiss()
     }
 
-    /*
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
-        bottomSheetDialog.setOnShowListener { dialog: DialogInterface ->
-            val dialogc = dialog as BottomSheetDialog
-            // When using AndroidX the resource can be found at com.google.android.material.R.id.design_bottom_sheet
-            val bottomSheet =
-                dialogc.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
-            val bottomSheetBehavior: BottomSheetBehavior<*> =
-                BottomSheetBehavior.from(bottomSheet)
-            bottomSheetBehavior.peekHeight = Resources.getSystem().displayMetrics.heightPixels
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED)
-        }
-        return bottomSheetDialog
-    }*/
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
         dialog.setOnShowListener { dialogInterface ->
@@ -115,7 +99,6 @@ class EditNameDialogFragment : BottomSheetDialogFragment(), View.OnClickListener
         }
         return dialog
     }
-
 
     private fun setupFullHeight(bottomSheetDialog: BottomSheetDialog) {
         val bottomSheet =

@@ -10,7 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.properties.Delegates
 
 class UserDashboardActivity : AppCompatActivity(), HomeFragment.ISortDataListener, SortDialogFragment.ISortByListener,
-    EditNameDialogFragment.IDismissListener, ProfileFragment.IEditNameListener {
+    EditNameDialogFragment.IFinishEditListener, ProfileFragment.IEditNameListener {
 
     private lateinit var userDashboardBinding : ActivityUserDashboardBinding
     private var userId by Delegates.notNull<Int>()
@@ -105,7 +105,8 @@ class UserDashboardActivity : AppCompatActivity(), HomeFragment.ISortDataListene
         editNameDialogFragment.show(supportFragmentManager, "")
     }
     override fun onFinishEdit(firstName : String, lastName : String) {
-        profileFragment.updateUserFullName(firstName, lastName)
+        if (firstName.isNotEmpty() && lastName.isNotEmpty()) {
+            profileFragment.updateUserFullName(firstName, lastName)
+        }
     }
-
 }

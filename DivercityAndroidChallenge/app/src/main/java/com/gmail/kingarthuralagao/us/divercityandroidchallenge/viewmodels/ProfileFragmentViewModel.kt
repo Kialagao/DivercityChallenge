@@ -15,6 +15,7 @@ class ProfileFragmentViewModel(application: Application) : AndroidViewModel(appl
     }
 
     var userLiveData = profileFragmentRepository.usersListLiveData
+    private val SHARED_PREFS = "sharedPreference"
 
     fun getUser(userId : Int) {
         try {
@@ -37,6 +38,8 @@ class ProfileFragmentViewModel(application: Application) : AndroidViewModel(appl
         val fileName = "FakeUserDB.txt"
         val dir = getApplication<Application>().filesDir
         val file = File(dir, fileName)
-        profileFragmentRepository.updateUserFullName(id, firstName, lastName, file)
+        val sharedPreferences = getApplication<Application>().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
+        val sharedPreferencesEditor = sharedPreferences.edit()
+        profileFragmentRepository.updateUserFullName(id, firstName, lastName, file, sharedPreferencesEditor)
     }
 }
