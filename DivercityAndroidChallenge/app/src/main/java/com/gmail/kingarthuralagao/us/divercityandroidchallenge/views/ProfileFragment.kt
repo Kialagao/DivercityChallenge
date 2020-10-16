@@ -6,13 +6,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
-import com.gmail.kingarthuralagao.us.divercityandroidchallenge.adapters.getScreenWidth
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.FragmentProfileBinding
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.models.User
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.viewmodels.ProfileFragmentViewModel
@@ -36,7 +34,6 @@ class ProfileFragment : Fragment() {
         }
     }
 
-    private val TAG = javaClass.simpleName
     private lateinit var profileBinding : FragmentProfileBinding
     private var userId by Delegates.notNull<Int>()
     private lateinit var profileFragmentViewModel : ProfileFragmentViewModel
@@ -84,9 +81,8 @@ class ProfileFragment : Fragment() {
     private val userObserver = Observer<User> { it ->
         if (it != null) {
             setViewContent(it)
-            Log.d(TAG, "InObserver")
         } else {
-            Log.d(TAG, "Empty or Null ")
+            Log.d(javaClass.simpleName, "Empty List")
         }
     }
 

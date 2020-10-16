@@ -22,7 +22,6 @@ import java.util.*
 class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
     : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private val TAG = javaClass.simpleName
     class UserViewHolder(binding: ViewholderUserBinding) : RecyclerView.ViewHolder(binding.root) {
         var avatarImageView = binding.userIv
         var fullNameTextView  = binding.nameAndEmailLayout.nameTv
@@ -32,16 +31,16 @@ class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
         var dateOfBirthTextView = binding.userPersonalLayout.dobTv
     }
 
+    private val TAG = javaClass.simpleName
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         var viewHolderUserBinding = ViewholderUserBinding.inflate(layoutInflater, parent, false)
-        Log.i(TAG, "onCreateViewHolder")
 
         return UserViewHolder(viewHolderUserBinding)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        Log.i(TAG, "onBindViewHolder")
         val user = usersDataSet[position]
         (holder as UserViewHolder).fullNameTextView.text = "${user.getFirstName()} ${user.getLastName()}"
         holder.emailTextView.text = user.getEmail()
@@ -49,7 +48,6 @@ class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
         holder.yearsOfExperienceTextView.text =
             "${user.getYearsOfExperience()} ${if (user.getYearsOfExperience() > 1) "years" else "year"} of experience"
         holder.dateOfBirthTextView.text = setDateOfBirth(user.getDateOfBirth())
-
         holder.avatarImageView.layoutParams = ConstraintLayout.LayoutParams(
             getScreenWidth() / 4,
             getScreenWidth() / 4
@@ -59,6 +57,10 @@ class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
             .load(user.getAvatar())
             .circleCrop()
             .into(holder.avatarImageView)
+    }
+
+    override fun getItemCount(): Int {
+        return usersDataSet.size
     }
 
     private fun setDateOfBirth(dateOfBirth: Date): CharSequence? {
@@ -71,15 +73,10 @@ class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
         return "Born on $monthName $day, $year"
     }
 
-    override fun getItemCount(): Int {
-        return usersDataSet.size
-    }
-
     fun setData(newData: MutableList<User>) {
         this.usersDataSet = newData
         notifyDataSetChanged()
     }
-
 
     private fun getMonthName(month: Int): String {
         return when (month) {
@@ -101,12 +98,4 @@ class UsersRecyclerViewAdapter(private var usersDataSet: MutableList<User>)
 
 fun getScreenWidth(): Int {
     return Resources.getSystem().displayMetrics.widthPixels
-}
-
-fun getScreenHeight(): Int {
-    return Resources.getSystem().displayMetrics.heightPixels
-}
-
-fun isPortrait() : Boolean {
-    return Resources.getSystem().configuration.orientation == Configuration.ORIENTATION_PORTRAIT
 }

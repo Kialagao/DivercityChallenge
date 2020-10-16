@@ -1,5 +1,6 @@
 package com.gmail.kingarthuralagao.us.divercityandroidchallenge.views
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,18 +9,24 @@ import androidx.fragment.app.Fragment
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.FragmentHomeBinding
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.FragmentMenuBinding
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.FragmentProfileBinding
+import java.lang.RuntimeException
 
 class MenuFragment : Fragment() {
+
+    interface ILogOut {
+        fun onLogOutClicked()
+    }
 
     companion object {
         fun newInstance() : MenuFragment = MenuFragment()
     }
 
-    lateinit var profileBinding : FragmentMenuBinding
+    private lateinit var menuBinding: FragmentMenuBinding
+    private var logOutListener : ILogOut? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        profileBinding = FragmentMenuBinding.inflate(layoutInflater)
+        menuBinding = FragmentMenuBinding.inflate(layoutInflater)
     }
 
     override fun onCreateView(
@@ -27,10 +34,27 @@ class MenuFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return profileBinding.root
+        return menuBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        menuBinding.logout.setOnClickListener {
+            logOutListener?.onLogOutClicked()
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is ILogOut) {
+            logOutListener = context
+        } else {
+            throw RuntimeException("Must implement ILogOut")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        logOutListener = null
     }
 }

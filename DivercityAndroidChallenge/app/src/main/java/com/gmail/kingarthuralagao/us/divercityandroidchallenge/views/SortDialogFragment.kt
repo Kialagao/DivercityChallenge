@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioGroup
 import androidx.fragment.app.DialogFragment
-import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.adapters.getScreenWidth
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.DialogFragmentSortBinding
 import java.lang.RuntimeException

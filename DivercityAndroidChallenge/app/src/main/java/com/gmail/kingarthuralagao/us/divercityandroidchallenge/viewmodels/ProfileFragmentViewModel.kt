@@ -3,6 +3,7 @@ package com.gmail.kingarthuralagao.us.divercityandroidchallenge.viewmodels
 import android.app.Application
 import android.content.Context
 import androidx.lifecycle.AndroidViewModel
+import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.repositories.ProfileFragmentRepository
 import java.io.File
 import java.io.FileInputStream
@@ -19,23 +20,18 @@ class ProfileFragmentViewModel(application: Application) : AndroidViewModel(appl
 
     fun getUser(userId : Int) {
         try {
-            var fileInputStream = getApplication<Application>().openFileInput("FakeUserDB.txt")
+            val fileName = getApplication<Application>().resources.getString(R.string.filename)
+            val dir = getApplication<Application>().filesDir
+            val file = File(dir, fileName)
 
-            profileFragmentRepository.fetchUsers(userId, fileInputStream, null)
+            profileFragmentRepository.fetchUser(userId, file)
         } catch (e : IOException) {
-            val assetManager = getApplication<Application>().assets
-            val inputStream = assetManager.open("db.txt")
-
-            val fileName = "FakeUserDB.txt"
-            val fileOutputStream = getApplication<Application>().openFileOutput(fileName,
-                Context.MODE_PRIVATE
-            )
-            profileFragmentRepository.fetchUsers(userId, inputStream, fileOutputStream)
+            e.printStackTrace()
         }
     }
 
     fun updateUserFullName(id : Int, firstName : String, lastName : String) {
-        val fileName = "FakeUserDB.txt"
+        val fileName = getApplication<Application>().resources.getString(R.string.filename)
         val dir = getApplication<Application>().filesDir
         val file = File(dir, fileName)
         val sharedPreferences = getApplication<Application>().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)

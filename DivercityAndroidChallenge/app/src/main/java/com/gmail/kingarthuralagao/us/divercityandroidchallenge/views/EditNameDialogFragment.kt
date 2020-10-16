@@ -1,12 +1,9 @@
 package com.gmail.kingarthuralagao.us.divercityandroidchallenge.views
 
-import android.app.Activity
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.res.Resources
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -105,7 +102,7 @@ class EditNameDialogFragment : BottomSheetDialogFragment(), View.OnClickListener
             bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet) as FrameLayout
         val bottomSheetBehavior: BottomSheetBehavior<*> =
             BottomSheetBehavior.from(bottomSheet)
-        val layoutParams = bottomSheet!!.layoutParams
+        val layoutParams = bottomSheet.layoutParams
         val windowHeight = getWindowHeight()
         if (layoutParams != null) {
             layoutParams.height = windowHeight
@@ -115,7 +112,6 @@ class EditNameDialogFragment : BottomSheetDialogFragment(), View.OnClickListener
     }
 
     private fun getWindowHeight(): Int {
-        // Calculate window height for fullscreen use
         val displayMetrics = Resources.getSystem().displayMetrics
         return displayMetrics.heightPixels
     }

@@ -28,7 +28,6 @@ class HomeFragment : Fragment() {
         fun newInstance() : HomeFragment = HomeFragment()
     }
 
-    private val TAG = javaClass.simpleName
     private lateinit var homeFragmentBinding : FragmentHomeBinding
     private lateinit var viewManager : LinearLayoutManager
     private lateinit var viewAdapter : UsersRecyclerViewAdapter
@@ -58,7 +57,6 @@ class HomeFragment : Fragment() {
             layoutManager = viewManager
             adapter = viewAdapter
         }
-        Log.d(TAG, "onCreateView")
         return homeFragmentBinding.root
     }
 
@@ -67,6 +65,12 @@ class HomeFragment : Fragment() {
         homeFragmentViewModel.getUsers()
         homeFragmentBinding.sortBtn.setOnClickListener {
             sortListener?.onSortBtnClick()
+        }
+
+        homeFragmentBinding.swipeRefreshLayout.setOnRefreshListener {
+            // This method performs the actual data-refresh operation.
+            // The method calls setRefreshing(false) when it's finished.
+            homeFragmentViewModel.getUsers()
         }
     }
 
@@ -85,18 +89,14 @@ class HomeFragment : Fragment() {
     }
 
     fun sortItems(sortBy : String, sortOption : String) {
-        Log.d(TAG, sortBy + "" + sortOption)
         homeFragmentViewModel.sortData(sortBy, sortOption)
         viewAdapter.setData(homeFragmentViewModel.userListLiveData.value!!)
     }
 
     private val usersListObserver = Observer<MutableList<User>> { list ->
         if (!list.isNullOrEmpty()) {
-            Log.d(TAG, "InObserver")
-            //list.sortBy { it.getDateOfBirth() }
             viewAdapter.setData(list)
-        } else {
-            Log.d(TAG, "Empty or Null ")
+            homeFragmentBinding.swipeRefreshLayout.isRefreshing = false
         }
     }
 }

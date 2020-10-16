@@ -2,7 +2,6 @@ package com.gmail.kingarthuralagao.us.divercityandroidchallenge.views
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.R
 import com.gmail.kingarthuralagao.us.divercityandroidchallenge.databinding.ActivityUserDashboardBinding
@@ -10,7 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlin.properties.Delegates
 
 class UserDashboardActivity : AppCompatActivity(), HomeFragment.ISortDataListener, SortDialogFragment.ISortByListener,
-    EditNameDialogFragment.IFinishEditListener, ProfileFragment.IEditNameListener {
+    EditNameDialogFragment.IFinishEditListener, ProfileFragment.IEditNameListener, MenuFragment.ILogOut {
 
     private lateinit var userDashboardBinding : ActivityUserDashboardBinding
     private var userId by Delegates.notNull<Int>()
@@ -108,5 +107,9 @@ class UserDashboardActivity : AppCompatActivity(), HomeFragment.ISortDataListene
         if (firstName.isNotEmpty() && lastName.isNotEmpty()) {
             profileFragment.updateUserFullName(firstName, lastName)
         }
+    }
+
+    override fun onLogOutClicked() {
+        finish()
     }
 }

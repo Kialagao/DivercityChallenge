@@ -8,18 +8,17 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
 
-class ProfileFragmentRepository {
-    private val TAG = javaClass.simpleName
+class ProfileFragmentRepository : Repository() {
     val usersListLiveData = MutableLiveData<User>()
 
-    // Mimic network call
-    fun fetchUsers(id : Int, inputStream: InputStream, outputStream: FileOutputStream?) {
+    // Mimic a GET call
+    fun fetchUser(id : Int, file : File) {
         Thread {
-            getUserInfoFromFile(id, inputStream, outputStream)
+            getUserInfoFromFile(id, FileInputStream(file))
         }.start()
     }
 
-    // Mimic network call
+    // Mimic a POST call
     fun updateUserFullName(userId : Int, firstName : String, lastName : String, file : File, editor: SharedPreferences.Editor) {
         Thread {
             val inputStream = FileInputStream(file)
@@ -61,9 +60,7 @@ class ProfileFragmentRepository {
                 str += readString
             }
 
-            Log.d(TAG, str.toString())
             val jsonArray = JSONArray(str)
-            Log.d(TAG, jsonArray.toString())
             inputStreamReader.close()
             return jsonArray
         } catch (e :IOException) {
@@ -72,7 +69,7 @@ class ProfileFragmentRepository {
         }
     }
 
-    private fun getUserInfoFromFile(id : Int, inputStream: InputStream, fileOutputStream: FileOutputStream?) {
+    private fun getUserInfoFromFile(id : Int, inputStream: InputStream) {
         var str: String? = ""
         try {
             val inputStreamReader = InputStreamReader(inputStream)
@@ -83,26 +80,12 @@ class ProfileFragmentRepository {
                 str += readString
             }
 
-            Log.d(TAG, str.toString())
             val jsonArray = JSONArray(str)
-            Log.d(TAG, jsonArray.toString())
             inputStreamReader.close()
             usersListLiveData.postValue(buildUser(jsonArray, id))
-
-            if (fileOutputStream != null) {
-                writeToFile(jsonArray, fileOutputStream)
-                Log.d(TAG, "WritingToFile")
-            }
         } catch (ioException: IOException) {
-            Log.e(TAG, ioException.message.toString())
+            ioException.printStackTrace()
         }
-    }
-
-    // Save json data to a File (Fake backend server)
-    private fun writeToFile(jsonArray: JSONArray, fileOutputStream: FileOutputStream) {
-        val byte = jsonArray.toString().toByteArray()
-        fileOutputStream.write(byte)
-        fileOutputStream.close()
     }
 
     // Build User objects from JSON
@@ -111,58 +94,9 @@ class ProfileFragmentRepository {
         for (i in 0 until size) {
             val jsonObject = jsonArray.getJSONObject(i)
             if (jsonObject.getInt("id") == id) {
-               return buildUser(jsonObject, User.builder)
+               return directUserBuilder(jsonObject, User.builder)
             }
         }
         return null
     }
-
-    private fun buildUser(jsonObject: JSONObject, builder: User.UserBuilder): User {
-        return builder
-            .withId(jsonObject.getInt("id"))
-            .withFirstName(jsonObject.getString("first_name"))
-            .withLastName(jsonObject.getString("last_name"))
-            .withBirthday(jsonObject.getString("dob"))
-            .withEmail(jsonObject.getString("email"))
-            .withGender(jsonObject.getString("gender"))
-            .withYearsOfExperience(jsonObject.getInt("year_experience"))
-            .withAvatar(jsonObject.getString("avatar"))
-            .build()
-    }
-        /*
-       var str: String? = ""
-       try {
-
-           val assetManager: AssetManager = assets
-           val inputStream = assetManager.open("db.txt")
-           val inputStreamReader = InputStreamReader(inputStream)
-           val inputBuffer = CharArray(100)
-           var charRead: Int
-           while (inputStreamReader.read(inputBuffer).also { charRead = it } > 0) {
-               val readString = String(inputBuffer, 0, charRead)
-               str += readString
-           }
-
-           val jsonObject = JSONArray(str)
-           Log.d(TAG, jsonObject.toString())
-
-           val input = openFileInput("userdb.txt")
-           val inputStreamReader = InputStreamReader(input)
-           val inputBuffer = CharArray(100)
-           var charRead: Int
-           while (inputStreamReader.read(inputBuffer).also { charRead = it } > 0) {
-               val readString = String(inputBuffer, 0, charRead)
-               str += readString
-           }
-
-           val jsonObject = JSONArray(str)
-           Log.d(TAG, jsonObject.toString())
-           val fileName = "fakedb2.txt"
-           val fileOutputStream = openFileOutput(fileName, MODE_PRIVATE)
-           val byte = jsonObject.toString().toByteArray()
-           fileOutputStream.write(byte)
-           fileOutputStream.close()
-       } catch (ioe: IOException) {
-           ioe.printStackTrace()
-       }*/
 }
