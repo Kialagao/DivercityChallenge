@@ -1,6 +1,6 @@
 # Divercity Android Challenge
 
-A short application that I made for my internship application at Divercity 
+A short application that I made for my Android Engr. internship application at Divercity 
 
 ## Authors
 
@@ -8,6 +8,7 @@ King Arthur Alagao (kingarthuralagao@gmail.com)
 
 ## Video Link
 
+https://www.youtube.com/watch?v=vhhpXMFI4qc
 
 
 ## Acknowledgments
@@ -25,3 +26,4 @@ King Arthur Alagao (kingarthuralagao@gmail.com)
 - [Reading and writing to a file in Android] (https://stackoverflow.com/questions/14376807/read-write-string-from-to-a-file-in-android)
 - [Rewriting the content of a file in Java] (https://stackoverflow.com/questions/6994518/how-to-delete-the-content-of-text-file-without-deleting-itself)
 - [Using ViewBinding with RecyclerView] (https://medium.com/@sanjeevy133/an-idiots-guide-to-android-recyclerview-and-databinding-4ebf8db0daff)
+- [Making full screen BottomSheetDialog] (https://stackoverflow.com/questions/58065771/bottomsheetdialogfragment-full-screen)
