@@ -1,6 +1,6 @@
 # Divercity Android Challenge
 
-A short application that I made for my internship application at Divercity 
+A short application that I made for my Android Engr. internship application at Divercity 
 
 ## Authors
 
